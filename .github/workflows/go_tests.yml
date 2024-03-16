@@ -25,5 +25,5 @@ jobs:
       run: go version
     - name: workflow tests
       if: steps.filter.outputs.go == 'true'
-      run: go test ./... -v
+      run: cd go/ && go test ./... -v
 
