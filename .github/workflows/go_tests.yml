@@ -21,9 +21,9 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: Display Go version
-      if: steps.filter.outputs.workflows == 'true'
+      if: steps.filter.outputs.go == 'true'
       run: go version
     - name: workflow tests
-      if: steps.filter.outputs.workflows == 'true'
+      if: steps.filter.outputs.go == 'true'
       run: go test ./... -v
 
