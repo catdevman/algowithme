@@ -1,7 +1,6 @@
 package twosum
 
 func TwoSum(nums []int, target int) []int {
-	// add a comment to trigger workflow
 	out := []int{}
 outerLoop:
 	for i := 0; i <= len(nums)-2; i++ {
