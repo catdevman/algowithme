@@ -31,5 +31,5 @@ jobs:
         go-version: ${{ matrix.go-version }}
     - name: go tests
       run: |
-        cd $(basename ${{matrix.changed-files}}) && go test ./... -v
+        cd $(dirname ${{matrix.changed-files}}) && go test ./... -v
 
