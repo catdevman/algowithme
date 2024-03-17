@@ -30,6 +30,6 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: go tests
-      run: go test ./... -v
-      working-directory: ${{ matrix.changed-files }}
+      run: |
+        cd $(basename ${{matrix.changed-files}}) && go test ./... -v
 
