@@ -41,5 +41,5 @@ jobs:
       run: |
         export full_path=$(dirname ${{matrix.changed-files}})
         export dir_name=$(basename $full_path)
-        cd $full_path && gpg "more_${dir_name}_test.go.gpg" > "more_${dir_name}_test.go" && go test ./... -v
+        cd $full_path && gpg -d "more_${dir_name}_test.go.gpg" > "more_${dir_name}_test.go" && go test ./... -v
 
