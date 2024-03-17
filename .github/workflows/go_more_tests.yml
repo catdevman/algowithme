@@ -33,13 +33,13 @@ jobs:
       with:
         go-version: ${{ matrix.go-version }}
     - name: Import GPG Key
-      uses: crazy-max/ghaction-import-gpg@v1
-      env:
-         GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-         PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      uses: crazy-max/ghaction-import-gpg@v6
+      with:
+         gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+         passphrase: ${{ secrets.GPG_PASSPHRASE }}
     - name: go tests
       run: |
         export full_path=$(dirname ${{matrix.changed-files}})
         export dir_name=$(basename $full_path)
-        cd $full_path && echo ${{secrets.GPG_PASSPHRASE}} | gpg --yes --passphrase-fd 0 -d "more_${dir_name}_test.go.gpg" > "more_${dir_name}_test.go" && go test ./... -v
+        cd $full_path && gpg "more_${dir_name}_test.go.gpg" > "more_${dir_name}_test.go" && go test ./... -v
 
