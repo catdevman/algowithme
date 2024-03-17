@@ -5,9 +5,8 @@ on: [push]
 jobs:
   paths-filter:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: [ '1.22.0' ]
+    outputs:
+      files: ${{ steps.filter.outputs.go_files }}
     steps:
     - uses: actions/checkout@v2
     - uses: dorny/paths-filter@v2
@@ -16,14 +15,20 @@ jobs:
         filters: |
           go:
             - 'go/**/**'
+  go-tests:
+    runs-on: ubuntu-latest
+    needs: paths-filter
+    strategy:
+      matrix:
+        go-version: [ '1.22.0' ]
+        changed-files: ${{needs.path-filter.outputs.files}} 
+    steps:
+    - uses: actions/checkout@v2
     - name: Setup Go ${{ matrix.go-version }}
       uses: actions/setup-go@v4
       with:
         go-version: ${{ matrix.go-version }}
-    - name: Display Go version
-      if: steps.filter.outputs.go == 'true'
-      run: go version
-    - name: workflow tests
-      if: steps.filter.outputs.go == 'true'
-      run: cd go/twosum && go test ./... -v
+    - name: go tests
+      run: go test ./... -v
+      working-directory: ${{ matrix.changed-files }}
 
