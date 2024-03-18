@@ -32,5 +32,5 @@ func MaxProduct(nums []int) int {
 		}
 	}
 
-	return int(math.Max(float64(max1*max2*max3), float64(max1*min1*min2)))
+	return max(max1*max2*max3, max1*min1*min2)
 }
